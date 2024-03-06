@@ -7,31 +7,31 @@
 
 using namespace std;
 using namespace cv;
-//¶¨Òå³£Á¿²ÎÊý
-const int SAR_SIFT_MAX_KEYPOINTS = 4000;//¼ì²âµÄÌØÕ÷µã¸öÊý×î´óÖµ£¬²Î¼ûuniform robust sift
+//ï¿½ï¿½ï¿½å³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+const int SAR_SIFT_MAX_KEYPOINTS = 4000;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Î¼ï¿½uniform robust sift
 
-const int SAR_SIFT_LATERS = 8;//sar-siftËã·¨³ß¶È¿Õ¼ä²ãÊý
+const int SAR_SIFT_LATERS = 8;//sar-siftï¿½ã·¨ï¿½ß¶È¿Õ¼ï¿½ï¿½ï¿½ï¿½
 
-const float SAR_SIFT_FACT_RADIUS_ORI = 6.0f;//¼ÆËãÖ÷·½ÏòÊ±ºòÌØÕ÷µãÁÚÓò°ë¾¶
+const float SAR_SIFT_FACT_RADIUS_ORI = 6.0f;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
 
-const float SAR_SIFT_RADIUS_DES = 12.0f;//ÃèÊö×ÓÁÚÓò°ë¾¶
+const float SAR_SIFT_RADIUS_DES = 12.0f;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
 
-const int SAR_SIFT_BORDER_CONSTANT = 2;//ÌØÕ÷µã¼ì²âÊ±±ß½ç³£Á¿
+const int SAR_SIFT_BORDER_CONSTANT = 2;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ß½ç³£ï¿½ï¿½
 
-const int SAR_SIFT_ORI_BINS = 36;//Ö÷·½ÏòÖ±·½Í¼Î¬¶È
+const int SAR_SIFT_ORI_BINS = 36;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Í¼Î¬ï¿½ï¿½
 
-const float SAR_SIFT_ORI_RATIO = 0.8f;//Ö÷·½ÏòÖ±·½Í¼£¬·åÖµ±ÈÀý
+const float SAR_SIFT_ORI_RATIO = 0.8f;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 
-/*Ô­Ê¼sar-siftÖÐGLOHÔÚ½Ç¶È·½Ïò·ÖÎª4¸öÍø¸ñ£¬8¸öÍø¸ñÐ§¹û¸üºÃ*/
-const int SAR_SIFT_GLOH_ANG_GRID = 8;//GLOHÍø¸ñÑØ½Ç¶È·½ÏòµÈ·ÖÇø¼ä¸öÊý
+/*Ô­Ê¼sar-siftï¿½ï¿½GLOHï¿½Ú½Ç¶È·ï¿½ï¿½ï¿½ï¿½Îª4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+const int SAR_SIFT_GLOH_ANG_GRID = 8;//GLOHï¿½ï¿½ï¿½ï¿½ï¿½Ø½Ç¶È·ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-const float SAR_SIFT_GLOH_RATIO_R1_R2 = 0.73f;//GLOHÍø¸ñÖÐ¼äÔ²°ë¾¶ºÍÍâÔ²°ë¾¶Ö®±È
+const float SAR_SIFT_GLOH_RATIO_R1_R2 = 0.73f;//GLOHï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Ô²ï¿½ë¾¶ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ë¾¶Ö®ï¿½ï¿½
 
-const float SAR_SIFT_GLOH_RATIO_R1_R3 = 0.25f;//GLOHÍø¸ñ×îÄÚ²ãÔ²°ë¾¶ºÍÍâÔ²°ë¾¶Ö®±È
+const float SAR_SIFT_GLOH_RATIO_R1_R3 = 0.25f;//GLOHï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ô²ï¿½ë¾¶ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ë¾¶Ö®ï¿½ï¿½
 
-const int SAR_SIFT_DES_ANG_BINS = 8;//ÏñËØÌÝ¶È·½ÏòÔÚ0-360¶ÈÄÚµÈ·ÖÇø¼ä¸öÊý
+const int SAR_SIFT_DES_ANG_BINS = 8;//ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶È·ï¿½ï¿½ï¿½ï¿½ï¿½0-360ï¿½ï¿½ï¿½ÚµÈ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-const float DESCR_MAG_THR = 0.2f;//ÃèÊö×ÓãÐÖµ
+const float DESCR_MAG_THR = 0.2f;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 
 class shift
 {
@@ -42,24 +42,24 @@ public:
 		nFeature(nFeature),Mmax(Mmax),sigma(sigma),ratio(ratio),
 		threshold(threshold),d(d){}
 
-	// ¹¹½¨³ß¶È¿Õ¼ä
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ß¶È¿Õ¼ï¿½
 	void build_sar_shift_space(const Mat& image, vector<Mat>& sar_harris, vector<Mat>& gradient, vector<Mat>& orient);
 
 
-	// ¼ì²â¼«Öµµã 
+	// ï¿½ï¿½â¼«Öµï¿½ï¿½ 
 	void find_sapce_extream(const vector<Mat>& harris_fun, const vector<Mat>& amplit, const vector<Mat>& orient, vector<KeyPoint>& keys);
 
-	// ¼ÆËãÌØÕ÷µãÃèÊö×Ó
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void calc_descriptors(const vector<Mat>& amplit, const vector<Mat>& orient, const vector<KeyPoint>& keys, Mat& descriptors);
 
-	// ¼ì²âÌØÕ÷µã
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void detect_keys(const Mat& image, vector<KeyPoint>& keys, const vector<Mat>& amplit, const vector<Mat>& orient, Mat& des);
 private:
-	int nFeature; // Í¼ÏñµÄÏñÖÐ²ÉÑùµÄÏñËØµã¸öÊý
-	int Mmax;// ³ß¶È¿Õ¼ä²ãÊý£¬Ä¬ÈÏÊÇ8
-	double sigma;//³õÊ¼ÖµÎª2
-	double ratio;// ÏàÁÚÁ½²ãµÄ³ß¶È±È
-	double threshold; // ¼ì²â¼«ÖµµãµÄãÐÖµ
+	int nFeature; // Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½
+	int Mmax;// ï¿½ß¶È¿Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½8
+	double sigma;//ï¿½ï¿½Ê¼ÖµÎª2
+	double ratio;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ß¶È±ï¿½
+	double threshold; // ï¿½ï¿½â¼«Öµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	double d = 0.04;
 };
 #endif
