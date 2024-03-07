@@ -45,10 +45,10 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件\数据结构与算法\shift_register</Filter>
     </ClCompile>
-    <ClCompile Include="shift.h">
+    <ClCompile Include="sift.h">
       <Filter>源文件\数据结构与算法\shift_register</Filter>
     </ClCompile>
-    <ClCompile Include="shift.cpp">
+    <ClCompile Include="sift.cpp">
       <Filter>源文件\数据结构与算法\shift_register</Filter>
     </ClCompile>
   </ItemGroup>

@@ -80,6 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\VSudio\RemoteSensing\RemoteSensing;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -163,8 +164,8 @@
     <ClCompile Include="list.cpp" />
     <ClCompile Include="list_Node.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="shift.cpp" />
-    <ClCompile Include="shift.h" />
+    <ClCompile Include="sift.cpp" />
+    <ClCompile Include="sift.h" />
     <ClCompile Include="ttest.cpp" />
     <ClCompile Include="测试.cpp" />
   </ItemGroup>
